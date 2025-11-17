@@ -24,6 +24,7 @@ import os
 import sys
 import subprocess
 import platform
+import time
 from pathlib import Path
 
 
@@ -61,7 +62,7 @@ def kill_adobe_reader():
     
     try:
         print("Closing any existing Adobe Reader instances...")
-        subprocess.run(['taskkill', '/F', '/IM', 'Acrobat.exe'], 
+        subprocess.run(['taskkill', '/F', '/IM', 'AcroRd32.exe'], 
                       stderr=subprocess.DEVNULL, 
                       stdout=subprocess.DEVNULL)
     except Exception:
@@ -108,16 +109,21 @@ def print_pdfs(directory, adobe_reader_path):
     
     print(f"Found {len(pdf_files)} PDF file(s) to print.")
     
-    for pdf_file in pdf_files:
-        print(f"Printing: {pdf_file.name}")
+    for i, pdf_file in enumerate(pdf_files, 1):
+        print(f"Printing ({i}/{len(pdf_files)}): {pdf_file.name}")
         try:
             # Use /t parameter to print the PDF and close Adobe Reader
-            subprocess.Popen([adobe_reader_path, '/t', str(pdf_file)])
+            subprocess.Popen([adobe_reader_path, '/t', str(pdf_file)],
+                           stderr=subprocess.DEVNULL,
+                           stdout=subprocess.DEVNULL)
+            # Small delay to avoid overwhelming the print queue
+            if i < len(pdf_files):
+                time.sleep(0.5)
         except Exception as e:
             print(f"Error printing {pdf_file.name}: {e}")
     
     print("\nAll PDF files have been sent to the printer.")
-    print("Note: Adobe Reader will close automatically after printing with recent updates.")
+    print("Note: Adobe Reader will close automatically after printing.")
 
 
 def main():
