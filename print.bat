@@ -1,5 +1,5 @@
 REM Kill all existings Reader instance
-taskkill /F /IM Acrobat.exe
+taskkill /F /IM AcroRd32.exe
 
 REM Determine the target directory
 REM If a parameter is passed, use it; otherwise use the current directory

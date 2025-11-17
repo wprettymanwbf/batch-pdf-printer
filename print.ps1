@@ -5,7 +5,7 @@
 
 # Kill all existing Adobe Reader instances
 Write-Host "Closing any existing Adobe Reader instances..."
-Get-Process -Name "Acrobat" -ErrorAction SilentlyContinue | Stop-Process -Force
+Get-Process -Name "AcroRd32" -ErrorAction SilentlyContinue | Stop-Process -Force
 
 # Determine the target directory
 # If a parameter is passed, use it; otherwise use the current directory
@@ -56,10 +56,12 @@ if ($pdfFiles.Count -eq 0) {
 Write-Host "Found $($pdfFiles.Count) PDF file(s) to print."
 
 # Launch the loop to print all the files in the folder
+$counter = 0
 foreach ($pdf in $pdfFiles) {
-    Write-Host "Printing: $($pdf.Name)"
+    $counter++
+    Write-Host "Printing ($counter/$($pdfFiles.Count)): $($pdf.Name)"
     Start-Process -FilePath $adobeReaderPath -ArgumentList "/t", "`"$($pdf.FullName)`"" -Wait:$false
 }
 
 Write-Host "All PDF files have been sent to the printer."
-Write-Host "Note: Adobe Reader will close automatically after printing with recent updates."
+Write-Host "Note: Adobe Reader will close automatically after printing."
