@@ -39,12 +39,55 @@ Download the archive and extract the folder to a permanent location on your comp
 
 ## Usage
 
-### Method 1: Direct Execution (Traditional)
+You can use either the batch file (print.bat) or the PowerShell script (print.ps1) - both provide the same functionality.
+
+### Option A: PowerShell Script (Recommended)
+The PowerShell script (***print.ps1***) is a standalone script that provides better error handling and cross-platform compatibility.
+
+#### Method 1: Direct Execution
+Put all the PDF files in the folder where the script resides, or navigate to a folder containing PDFs.
+
+Right-click ***print.ps1*** and select "Run with PowerShell", or run from PowerShell:
+```powershell
+.\print.ps1
+```
+
+#### Method 2: Print PDFs from Any Folder
+You can pass a folder path or a PDF file path as an argument:
+```powershell
+.\print.ps1 "C:\Path\To\Folder"
+```
+or
+```powershell
+.\print.ps1 "C:\Path\To\File.pdf"
+```
+
+#### Method 3: Send To Context Menu
+Create a shortcut to ***print.ps1*** in your SendTo folder:
+
+1. Press `Win + R` to open the Run dialog
+2. Type `shell:sendto` and press Enter
+3. This opens the SendTo folder (typically `C:\Users\YourUsername\AppData\Roaming\Microsoft\Windows\SendTo`)
+4. Create a shortcut to ***print.ps1*** in this folder:
+   - Right-click in the SendTo folder and select `New > Shortcut`
+   - Browse to the location where you extracted print.ps1
+   - Name the shortcut "Batch Print PDFs (PowerShell)" (or any name you prefer)
+5. Now you can right-click any folder containing PDFs or any PDF file, select `Send to > Batch Print PDFs (PowerShell)`, and all PDFs in that folder will be printed
+
+**Note:** If you encounter execution policy issues, you may need to run PowerShell as Administrator and execute:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+### Option B: Batch File (Traditional)
+The batch file (***print.bat***) works on all Windows systems without additional configuration.
+
+#### Method 1: Direct Execution
 Put all the PDF files in the folder where the batch scripts reside.
 
 Run ***print.bat*** and let everything run until the end.
 
-### Method 2: Send To Context Menu (Recommended)
+#### Method 2: Send To Context Menu
 You can print PDFs from any folder using the Windows "Send to" context menu:
 
 1. Press `Win + R` to open the Run dialog
