@@ -39,9 +39,61 @@ Download the archive and extract the folder to a permanent location on your comp
 
 ## Usage
 
-You can use either the batch file (print.bat) or the PowerShell script (print.ps1) - both provide the same functionality.
+You can use the batch file (print.bat), the PowerShell script (print.ps1), or the Python script (print.py) - all provide the same functionality with different implementation approaches.
 
-### Option A: PowerShell Script (Recommended)
+### Option A: Python Script (Cross-Platform)
+The Python script (***print.py***) is a standalone script that works on Windows and can be easily adapted for other platforms. It requires Python 3.x to be installed.
+
+#### Prerequisites
+- Python 3.x (Download from [python.org](https://www.python.org/downloads/) if not already installed)
+- Adobe Acrobat Reader DC
+- A default printer configured
+
+#### Method 1: Direct Execution
+Put all the PDF files in the folder where the script resides, or navigate to a folder containing PDFs.
+
+Run from command prompt or terminal:
+```bash
+python print.py
+```
+
+Or make it executable and run directly (on Windows):
+```bash
+print.py
+```
+
+#### Method 2: Print PDFs from Any Folder
+You can pass a folder path or a PDF file path as an argument:
+```bash
+python print.py "C:\Path\To\Folder"
+```
+or
+```bash
+python print.py "C:\Path\To\File.pdf"
+```
+
+#### Method 3: Send To Context Menu
+Create a batch file shortcut that calls the Python script in your SendTo folder:
+
+1. Create a new file named `BatchPrintPDFs.bat` with the following content:
+   ```batch
+   @echo off
+   python "C:\Path\To\batch-pdf-printer\print.py" %1
+   ```
+   (Replace `C:\Path\To\batch-pdf-printer` with the actual path to where you extracted the files)
+
+2. Press `Win + R` to open the Run dialog
+3. Type `shell:sendto` and press Enter
+4. Copy the `BatchPrintPDFs.bat` file to the SendTo folder
+5. Now you can right-click any folder containing PDFs or any PDF file, select `Send to > BatchPrintPDFs`, and all PDFs in that folder will be printed
+
+**Advantages of the Python script:**
+- Cross-platform compatibility (can be adapted for Linux/Mac)
+- Better error handling and feedback
+- Easy to modify and extend
+- No execution policy restrictions like PowerShell
+
+### Option B: PowerShell Script (Recommended for Windows)
 The PowerShell script (***print.ps1***) is a standalone script that provides better error handling and cross-platform compatibility.
 
 #### Method 1: Direct Execution
@@ -79,7 +131,7 @@ Create a shortcut to ***print.ps1*** in your SendTo folder:
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-### Option B: Batch File (Traditional)
+### Option C: Batch File (Traditional)
 The batch file (***print.bat***) works on all Windows systems without additional configuration.
 
 #### Method 1: Direct Execution
