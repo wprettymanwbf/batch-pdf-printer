@@ -71,13 +71,13 @@ def kill_adobe_reader():
 
 def get_pdf_files(directory):
     """
-    Get all PDF files in the specified directory.
+    Get all PDF files in the specified directory and its subdirectories.
     
     Args:
         directory: Path to the directory to search
     
     Returns:
-        List of Path objects for PDF files
+        List of Path objects for PDF files, sorted by full path
     """
     directory_path = Path(directory)
     if not directory_path.exists():
@@ -88,7 +88,7 @@ def get_pdf_files(directory):
         print(f"Error: Path is not a directory: {directory}")
         return []
     
-    pdf_files = sorted(directory_path.glob('*.pdf'))
+    pdf_files = sorted(directory_path.glob('**/*.pdf'))
     return pdf_files
 
 
