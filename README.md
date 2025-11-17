@@ -22,6 +22,8 @@ along with this script.  If not, see <http://www.gnu.org/licenses/gpl.txt>
 ## About this script
 Simple script to batch print every PDF in a folder just with a click without bothering about the number of PDF files to print.
 
+The script can be executed directly or configured to work with Windows "Send to" context menu, allowing you to print PDFs from any folder on your computer.
+
 
 ## Dependencies
 - Adobe Acrobat or Adobe Reader
@@ -33,10 +35,27 @@ Simple script to batch print every PDF in a folder just with a click without bot
 - Adobe Reader DC / Can fit Adobe Acrobat (with path change to .exe)
 
 ## Installation
-Download the archive and extract the folder when you want to have it.
+Download the archive and extract the folder to a permanent location on your computer (e.g., `C:\Tools\batch-pdf-printer`).
 
-Put all the PDF in the folder where the two batch scripts reside.
+## Usage
+
+### Method 1: Direct Execution (Traditional)
+Put all the PDF files in the folder where the batch scripts reside.
 
 Run ***print.bat*** and let everything run until the end.
+
+### Method 2: Send To Context Menu (Recommended)
+You can print PDFs from any folder using the Windows "Send to" context menu:
+
+1. Press `Win + R` to open the Run dialog
+2. Type `shell:sendto` and press Enter
+3. This opens the SendTo folder (typically `C:\Users\YourUsername\AppData\Roaming\Microsoft\Windows\SendTo`)
+4. Create a shortcut to ***print.bat*** in this folder:
+   - Right-click in the SendTo folder and select `New > Shortcut`
+   - Browse to the location where you extracted print.bat
+   - Name the shortcut "Batch Print PDFs" (or any name you prefer)
+5. Now you can right-click any folder containing PDFs, select `Send to > Batch Print PDFs`, and all PDFs in that folder will be printed
+
+**Note:** You can also select a single PDF file and send it to "Batch Print PDFs" - the script will print all PDFs in the same folder as the selected file.
 
 Adapt the timer in ***kill.bat*** if your computer is too slow.
