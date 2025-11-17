@@ -1,156 +1,92 @@
-Batch PDF Printer
-=================
+# Batch PDF Printer
 
-## License
-Script for batch printing all PDF in a folder on Windows Platform with Adobe Reader
+Simple Windows script to batch print all PDFs in a folder with Adobe Reader.
 
-Copyleft (C) Nicolas Simond - 2018
+## Features
+- Print all PDFs in a folder with a single click
+- Works with Windows "Send to" context menu
+- Multiple script options: Python, PowerShell, or Batch file
+- Processes PDFs recursively through subdirectories
+- No admin rights required
 
-This script is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This script is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this script.  If not, see <http://www.gnu.org/licenses/gpl.txt>
-
-## About this script
-Simple script to batch print every PDF in a folder just with a click without bothering about the number of PDF files to print.
-
-The script can be executed directly or configured to work with Windows "Send to" context menu, allowing you to print PDFs from any folder on your computer.
-
-
-## Dependencies
-- Adobe Acrobat or Adobe Reader
-- A default printer
-- No admin rights needed
-
-## Designed for
+## Requirements
 - Windows 7/10/11
-- Adobe Reader DC / Can fit Adobe Acrobat (with path change to .exe)
-
-## Installation
-Download the archive and extract the folder to a permanent location on your computer (e.g., `C:\Tools\batch-pdf-printer`).
-
-## Usage
-
-You can use the batch file (print.bat), the PowerShell script (print.ps1), or the Python script (print.py) - all provide the same functionality with different implementation approaches.
-
-### Option A: Python Script (Cross-Platform)
-The Python script (***print.py***) is a standalone script that works on Windows and can be easily adapted for other platforms. It requires Python 3.x to be installed.
-
-#### Prerequisites
-- Python 3.x (Download from [python.org](https://www.python.org/downloads/) if not already installed)
 - Adobe Acrobat Reader DC
-- A default printer configured
+- A configured default printer
+- Python 3.x (only for Python script option)
 
-#### Method 1: Direct Execution
-Put all the PDF files in the folder where the script resides, or navigate to a folder containing PDFs.
+## Quick Start
 
-Run from command prompt or terminal:
+Choose one of the three available scripts based on your preference:
+
+### Option 1: Python Script (Recommended for flexibility)
 ```bash
 python print.py
-```
-
-Or make it executable and run directly (on Windows):
-```bash
-print.py
-```
-
-#### Method 2: Print PDFs from Any Folder
-You can pass a folder path or a PDF file path as an argument:
-```bash
 python print.py "C:\Path\To\Folder"
 ```
-or
-```bash
-python print.py "C:\Path\To\File.pdf"
-```
 
-#### Method 3: Send To Context Menu
-Create a batch file shortcut that calls the Python script in your SendTo folder:
+**Advantages:** Cross-platform compatible, better error handling, easy to modify
 
-1. Create a new file named `BatchPrintPDFs.bat` with the following content:
-   ```batch
-   @echo off
-   python "C:\Path\To\batch-pdf-printer\print.py" %1
-   ```
-   (Replace `C:\Path\To\batch-pdf-printer` with the actual path to where you extracted the files)
-
-2. Press `Win + R` to open the Run dialog
-3. Type `shell:sendto` and press Enter
-4. Copy the `BatchPrintPDFs.bat` file to the SendTo folder
-5. Now you can right-click any folder containing PDFs or any PDF file, select `Send to > BatchPrintPDFs`, and all PDFs in that folder will be printed
-
-**Advantages of the Python script:**
-- Cross-platform compatibility (can be adapted for Linux/Mac)
-- Better error handling and feedback
-- Easy to modify and extend
-- No execution policy restrictions like PowerShell
-
-### Option B: PowerShell Script (Recommended for Windows)
-The PowerShell script (***print.ps1***) is a standalone script that provides better error handling and cross-platform compatibility.
-
-#### Method 1: Direct Execution
-Put all the PDF files in the folder where the script resides, or navigate to a folder containing PDFs.
-
-Right-click ***print.ps1*** and select "Run with PowerShell", or run from PowerShell:
+### Option 2: PowerShell Script (Recommended for Windows)
 ```powershell
 .\print.ps1
-```
-
-#### Method 2: Print PDFs from Any Folder
-You can pass a folder path or a PDF file path as an argument:
-```powershell
 .\print.ps1 "C:\Path\To\Folder"
 ```
-or
-```powershell
-.\print.ps1 "C:\Path\To\File.pdf"
-```
 
-#### Method 3: Send To Context Menu
-Create a shortcut to ***print.ps1*** in your SendTo folder:
-
-1. Press `Win + R` to open the Run dialog
-2. Type `shell:sendto` and press Enter
-3. This opens the SendTo folder (typically `C:\Users\YourUsername\AppData\Roaming\Microsoft\Windows\SendTo`)
-4. Create a shortcut to ***print.ps1*** in this folder:
-   - Right-click in the SendTo folder and select `New > Shortcut`
-   - Browse to the location where you extracted print.ps1
-   - Name the shortcut "Batch Print PDFs (PowerShell)" (or any name you prefer)
-5. Now you can right-click any folder containing PDFs or any PDF file, select `Send to > Batch Print PDFs (PowerShell)`, and all PDFs in that folder will be printed
-
-**Note:** If you encounter execution policy issues, you may need to run PowerShell as Administrator and execute:
+**Note:** If you encounter execution policy issues:
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-### Option C: Batch File (Traditional)
-The batch file (***print.bat***) works on all Windows systems without additional configuration.
+### Option 3: Batch File (Traditional)
+```cmd
+print.bat
+```
 
-#### Method 1: Direct Execution
-Put all the PDF files in the folder where the batch scripts reside.
+**Note:** Works immediately on all Windows systems without configuration.
 
-Run ***print.bat*** and let everything run until the end.
+## Installation
 
-#### Method 2: Send To Context Menu
-You can print PDFs from any folder using the Windows "Send to" context menu:
+1. Download and extract this folder to a permanent location (e.g., `C:\Tools\batch-pdf-printer`)
+2. Choose your preferred script from the options above
 
-1. Press `Win + R` to open the Run dialog
-2. Type `shell:sendto` and press Enter
-3. This opens the SendTo folder (typically `C:\Users\YourUsername\AppData\Roaming\Microsoft\Windows\SendTo`)
-4. Create a shortcut to ***print.bat*** in this folder:
-   - Right-click in the SendTo folder and select `New > Shortcut`
-   - Browse to the location where you extracted print.bat
-   - Name the shortcut "Batch Print PDFs" (or any name you prefer)
-5. Now you can right-click any folder containing PDFs, select `Send to > Batch Print PDFs`, and all PDFs in that folder will be printed
+## Usage
 
-**Note:** You can also select a single PDF file and send it to "Batch Print PDFs" - the script will print all PDFs in the same folder as the selected file.
+### Direct Execution
+Run the script in any folder containing PDFs:
+- The script will automatically find and print all PDFs in the current directory and subdirectories
 
-Adapt the timer in ***kill.bat*** if your computer is too slow.
+### Print from Any Folder (Python/PowerShell only)
+Pass a folder or file path as an argument:
+```bash
+python print.py "C:\Path\To\Folder"
+.\print.ps1 "C:\Path\To\Folder"
+```
+
+### Windows "Send to" Context Menu Setup
+
+1. Press `Win + R`, type `shell:sendto`, press Enter
+2. Create a shortcut in the SendTo folder:
+   - **For Python:** Create `BatchPrintPDFs.bat` with:
+     ```batch
+     @echo off
+     python "C:\Tools\batch-pdf-printer\print.py" %1
+     ```
+     (Adjust path to match your installation location)
+   - **For PowerShell:** Right-click → New → Shortcut to `print.ps1`
+   - **For Batch:** Right-click → New → Shortcut to `print.bat`
+3. Right-click any folder or PDF file → Send to → Your shortcut
+
+## How It Works
+- Closes any running Adobe Reader instances
+- Finds all PDF files in the target directory (recursively)
+- Sends each PDF to Adobe Reader for printing using the `/t` parameter
+- Adobe Reader prints and closes automatically
+
+## License
+GNU General Public License v3.0
+
+Copyleft (C) Nicolas Simond - 2018
+
+This script is free software licensed under GPL v3.0. See LICENSE file for details.
+
