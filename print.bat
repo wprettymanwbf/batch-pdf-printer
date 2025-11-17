@@ -1,6 +1,24 @@
 REM Kill all existings Reader instance
 taskkill /F /IM Acrobat.exe
 
+REM Determine the target directory
+REM If a parameter is passed, use it; otherwise use the current directory
+if "%~1"=="" (
+    set "TARGET_DIR=%cd%"
+) else (
+    REM Check if the parameter is a file or directory
+    if exist "%~1\" (
+        REM Parameter is a directory
+        set "TARGET_DIR=%~1"
+    ) else (
+        REM Parameter is a file, use its directory
+        set "TARGET_DIR=%~dp1"
+    )
+)
+
+REM Change to the target directory
+cd /d "%TARGET_DIR%"
+
 REM Launch the background script to kill the Acrobat Reader after each print because he don't do that itself
 REM start cmd.exe /c kill.bat
 
