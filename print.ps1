@@ -45,8 +45,8 @@ if (-not (Test-Path -Path $adobeReaderPath)) {
     }
 }
 
-# Get all PDF files in the target directory
-$pdfFiles = Get-ChildItem -Path $targetDir -Filter "*.pdf"
+# Get all PDF files in the target directory and subdirectories, sorted by full name
+$pdfFiles = Get-ChildItem -Path $targetDir -Filter "*.pdf" -Recurse | Sort-Object -Property FullName
 
 if ($pdfFiles.Count -eq 0) {
     Write-Host "No PDF files found in the directory."
