@@ -25,6 +25,7 @@ import sys
 import json
 import time
 import logging
+import shutil
 from pathlib import Path
 from datetime import datetime
 from threading import Lock
@@ -62,6 +63,14 @@ class PDFPrintHandler(FileSystemEventHandler):
         self.retry_count = config.get('retry_count', 3)
         self.retry_delay = config.get('retry_delay', 2)
         self.processing_delay = config.get('processing_delay', 1)
+        self.success_folder = config.get('success_folder', '')
+        self.error_folder = config.get('error_folder', '')
+        
+        # Create success and error folders if they don't exist
+        if self.success_folder:
+            Path(self.success_folder).mkdir(parents=True, exist_ok=True)
+        if self.error_folder:
+            Path(self.error_folder).mkdir(parents=True, exist_ok=True)
         
     def on_created(self, event):
         """
@@ -128,6 +137,11 @@ class PDFPrintHandler(FileSystemEventHandler):
                     # Mark as processed
                     self.processed_files.add(file_path)
                     logging.info(f"Successfully printed: {file_name}")
+                    
+                    # Move to success folder if configured
+                    if self.success_folder:
+                        self._move_file(file_path, self.success_folder, file_name)
+                    
                     return
                     
                 except PermissionError:
@@ -136,6 +150,9 @@ class PDFPrintHandler(FileSystemEventHandler):
                         time.sleep(self.retry_delay)
                     else:
                         logging.error(f"Failed to access file after {self.retry_count} attempts: {file_name}")
+                        # Move to error folder if configured
+                        if self.error_folder:
+                            self._move_file(file_path, self.error_folder, file_name)
                 
                 except Exception as e:
                     if attempt < self.retry_count:
@@ -143,6 +160,9 @@ class PDFPrintHandler(FileSystemEventHandler):
                         time.sleep(self.retry_delay)
                     else:
                         logging.error(f"Failed to print after {self.retry_count} attempts: {file_name} - {e}")
+                        # Move to error folder if configured
+                        if self.error_folder:
+                            self._move_file(file_path, self.error_folder, file_name)
     
     def _print_pdf(self, file_path):
         """
@@ -162,6 +182,30 @@ class PDFPrintHandler(FileSystemEventHandler):
             time.sleep(0.5)
         except Exception as e:
             raise Exception(f"Failed to execute Adobe Reader: {e}")
+    
+    def _move_file(self, file_path, destination_folder, file_name):
+        """
+        Move a file to a destination folder.
+        
+        Args:
+            file_path: Source path of the file
+            destination_folder: Destination folder path
+            file_name: Name of the file
+        """
+        try:
+            destination_path = Path(destination_folder) / file_name
+            
+            # Handle duplicate file names
+            if destination_path.exists():
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                name_without_ext = destination_path.stem
+                ext = destination_path.suffix
+                destination_path = Path(destination_folder) / f"{name_without_ext}_{timestamp}{ext}"
+            
+            shutil.move(file_path, destination_path)
+            logging.info(f"Moved file to: {destination_path}")
+        except Exception as e:
+            logging.error(f"Failed to move file {file_name}: {e}")
 
 
 def load_config(config_path):
@@ -180,7 +224,9 @@ def load_config(config_path):
         'retry_delay': 2,
         'processing_delay': 1,
         'log_level': 'INFO',
-        'log_file': 'hot_folder.log'
+        'log_file': 'hot_folder.log',
+        'success_folder': '',
+        'error_folder': ''
     }
     
     if not os.path.exists(config_path):
@@ -221,7 +267,9 @@ def save_default_config(config_path):
         'retry_delay': 2,
         'processing_delay': 1,
         'log_level': 'INFO',
-        'log_file': 'hot_folder.log'
+        'log_file': 'hot_folder.log',
+        'success_folder': 'C:\\PDFs\\HotFolder\\Success',
+        'error_folder': 'C:\\PDFs\\HotFolder\\Error'
     }
     
     try:
