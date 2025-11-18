@@ -4,3 +4,7 @@ __pycache__/
 *$py.class
 *.so
 .Python
+
+# Hot folder configuration and logs
+hot_folder_config.json
+*.log

@@ -1,0 +1,10 @@
+{
+    "hot_folder": "C:\\PDFs\\HotFolder",
+    "retry_count": 3,
+    "retry_delay": 2,
+    "processing_delay": 1,
+    "log_level": "INFO",
+    "log_file": "hot_folder.log",
+    "success_folder": "C:\\PDFs\\HotFolder\\Success",
+    "error_folder": "C:\\PDFs\\HotFolder\\Error"
+}
