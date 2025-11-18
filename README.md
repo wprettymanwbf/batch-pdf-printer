@@ -99,6 +99,8 @@ The hot folder feature allows you to automatically print PDFs as they are added 
    ```bash
    pip install watchdog
    ```
+   
+   **Note:** The convenience scripts (`hot_folder.bat` and `hot_folder.ps1`) will automatically install the dependency if it's missing.
 
 ### Configuration
 
@@ -133,11 +135,17 @@ The hot folder feature allows you to automatically print PDFs as they are added 
    ```bash
    python hot_folder.py
    ```
+   Or use the convenience scripts:
+   - **Windows Batch**: `hot_folder.bat`
+   - **PowerShell**: `.\hot_folder.ps1`
 
 2. **Specifying folder via command line:**
    ```bash
    python hot_folder.py "C:\Path\To\HotFolder"
    ```
+   Or:
+   - **Windows Batch**: `hot_folder.bat "C:\Path\To\HotFolder"`
+   - **PowerShell**: `.\hot_folder.ps1 "C:\Path\To\HotFolder"`
 
 3. The script will:
    - Monitor the specified folder for new PDF files
